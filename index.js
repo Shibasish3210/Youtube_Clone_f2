@@ -124,7 +124,7 @@ function expand_collapse_sidebar(){
     });
     async function fetchSearchResult(){
         video_container.innerHTML = '';
-        const apiKey = `AIzaSyDhtF3DqyKtTcqMDw6UO-wkiti5Fi8PhQY`;
+        const apiKey = `AIzaSyAZdnIKGBcCPitlE2NMYX1fqURJ5wFOgEQ`;
         const search_url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&part=snippet&q=${search.value}&type=channel,video,playlist&maxResults=20`;
             let response = await fetch(search_url);
             let search_values = await response.json(); 
