@@ -77,7 +77,7 @@ async function fetchComment(){
         makeComments(element);
     }
 }
-// fetchComment();
+fetchComment();
 const comment_container = document.getElementById("comment-container");
 function makeComments(comments){
     let comment = document.createElement("div");
@@ -137,7 +137,7 @@ function makeDate(date){
     const stringdate = day+"-"+month+"-"+year;;
     return stringdate;
   }
-// fixVideo();
+fixVideo();
 
 
 
