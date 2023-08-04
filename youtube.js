@@ -7,14 +7,14 @@
 // }
 
 const player = document.getElementById("player");
-console.log(player);
+// console.log(player);
 const currentUrl = window.location.href;
-console.log(currentUrl);
+// console.log(currentUrl);
 player.style.border = "none";
 
 let arr = currentUrl.split('@');
 const vid_id = ""+arr[1];
-console.log(vid_id);
+// console.log(vid_id);
 // `<iframe width="560" height="315" src="https://www.youtube.com/embed/mqfTcT56DhY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
 
 
@@ -31,19 +31,37 @@ function playThisVid(){
 
 }
 
+function formatNumber(num, precision = 2) {
+    const map = [
+      { suffix: 'T', threshold: 1e12 },
+      { suffix: 'B', threshold: 1e9 },
+      { suffix: 'M', threshold: 1e6 },
+      { suffix: 'K', threshold: 1e3 },
+      { suffix: '', threshold: 1 },
+    ];
+  
+    const found = map.find((x) => Math.abs(num) >= x.threshold);
+    if (found) {
+      const formatted = (num / found.threshold).toFixed(precision) + found.suffix;
+  
+      return formatted;
+    }
+  
+    return num;
+  }
 // queueMicrotask();
 playThisVid();
 
 const video_title = document.getElementById("title-stat");
 // const vid_stat = document.getElementById("desc-channel");
 
-const apiKey = `AIzaSyDhtF3DqyKtTcqMDw6UO-wkiti5Fi8PhQY`;
+const apiKey = `AIzaSyAZdnIKGBcCPitlE2NMYX1fqURJ5wFOgEQ`;
 async function fixVideo() {
     // video_title.innerHTML = 
     let response = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${vid_id}&key=${apiKey}`);
     let data = await response.json();
     let vid  = data.items[0];
-    console.log(data, vid);
+    // console.log(data, vid);
     getChanelIcon(vid);
 }
 async function getChanelIcon(video_info){
@@ -73,7 +91,7 @@ async function fetchComment(){
     console.log(data);
     for (let i = 0; i < data.items.length; i++) {
         const element = data.items[i];
-        console.log(element);
+        // console.log(element);
         makeComments(element);
     }
 }
@@ -99,7 +117,7 @@ function makeComments(comments){
                     <div class="img">
                         <img src="Youtube/Button-Btn.png" alt="">
                     </div>
-                    <div class="like">${comments.snippet.topLevelComment.snippet.likeCount}</div>
+                    <div class="like">${formatNumber(comments.snippet.topLevelComment.snippet.likeCount)}</div>
                 </div>
 
                 <div style="margin-left: 10px;" class="stat-items">                        
@@ -126,7 +144,7 @@ function makeComments(comments){
 }
 
 function makeDate(date){
-    console.log(typeof date);
+    // console.log(typeof date);
     let compactDate = date.split("T");
     let shortDate = compactDate[0];
     let newDate = shortDate.split("-");
@@ -148,7 +166,7 @@ function displayInfo(vid){
             </div>
             <div class="stat">
                 <div class="left-stat">
-                    <div>${vid.statistics.likeCount}</div>
+                    <div>${formatNumber(vid.statistics.viewCount)}</div>
                     <div> ${makeDate(vid.snippet.publishedAt)}</div>
                 </div>
                 <div class="like-dislike">
@@ -156,7 +174,7 @@ function displayInfo(vid){
                         <div class="img">
                             <img src="Youtube/Button-Btn.png" alt="">
                         </div>
-                        <div class="like">${vid.statistics.likeCount}</div>
+                        <div class="like">${formatNumber(vid.statistics.likeCount)}</div>
                     </div>
 
                     <div style="margin-left: 10px;" class="stat-items">                        
@@ -189,7 +207,7 @@ function displayInfo(vid){
                         <div><img style="width: 30px; height: 30px; border-radius: 50%; margin-right: 1rem;" src="${vid.channel_Thumbnail}" alt=""></div>
                         <div>
                             <div>${vid.snippet.channelTitle}</div>
-                            <div>${vid.channel_Subscriber} Subscribers</div>
+                            <div>${formatNumber(vid.channel_Subscriber)} Subscribers</div>
                         </div>
                     </div>
                     <div style="padding: 5px 25px; background-color: red; color: white; border-radius: 5px; display: flex; align-items:center ;">Subscribe</div>
